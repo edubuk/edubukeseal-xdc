@@ -331,7 +331,7 @@ const Verify = () => {
                       type="text"
                       value={moment
                         .unix(Number(Timestamp))
-                        .format("dddd, MMMM Do YYYY")}
+                        .format("dddd, MMMM Do YYYY, h:mm:ss a")}
                       placeholder="Certificate Type"
                       readOnly
                     />
