@@ -1,0 +1,8 @@
+.sliderContainer {
+  width: 90%;
+  margin: 0 auto; /* Center the slider */
+}
+
+.slider {
+  display: flex;
+}
