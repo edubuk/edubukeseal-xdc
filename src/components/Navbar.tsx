@@ -34,7 +34,7 @@ function TemporaryDrawer() {
     >
       <Link
         onClick={toggleDrawer(false)}
-        className="font-normal text-base text-center text-[#012376]"
+        className="font-normal text-base text-center text-[#2D6F57]"
         style={{ fontWeight: "700" }}
         href="/"
       >
@@ -42,7 +42,7 @@ function TemporaryDrawer() {
       </Link>
       <Link
         onClick={toggleDrawer(false)}
-        className="font-normal text-base text-center text-[#012376]"
+        className="font-normal text-base text-center text-[#2D6F57]"
         style={{ fontWeight: "700" }}
         href="/about"
       >
@@ -50,7 +50,7 @@ function TemporaryDrawer() {
       </Link>
       <Link
         onClick={toggleDrawer(false)}
-        className="font-normal text-base text-center text-[#012376]"
+        className="font-normal text-base text-center text-[#2D6F57]"
         style={{ fontWeight: "700" }}
         href="/verify"
       >
@@ -58,7 +58,7 @@ function TemporaryDrawer() {
       </Link>
       <Link
         onClick={toggleDrawer(false)}
-        className="font-normal text-base text-center text-[#012376]"
+        className="font-normal text-base text-center text-[#2D6F57]"
         style={{ fontWeight: "700" }}
         href="/generate"
       >
@@ -66,7 +66,7 @@ function TemporaryDrawer() {
       </Link>
       <Link
         onClick={toggleDrawer(false)}
-        className="font-normal text-base text-center text-[#012376]"
+        className="font-normal text-base text-center text-[#2D6F57]"
         style={{ fontWeight: "700" }}
         href="/ceta"
       >
@@ -74,7 +74,7 @@ function TemporaryDrawer() {
       </Link>
       <Link
         onClick={toggleDrawer(false)}
-        className="font-normal text-base text-center text-[#012376]"
+        className="font-normal text-base text-center text-[#2D6F57]"
         style={{ fontWeight: "700" }}
         href="/media"
       >
@@ -82,16 +82,26 @@ function TemporaryDrawer() {
       </Link>
       <Link
         onClick={toggleDrawer(false)}
-        className="font-normal text-base text-center text-[#012376]"
+        className="font-normal text-base text-center text-[#2D6F57]"
         style={{ fontWeight: "700" }}
         href="https://edubuk.co.in/contact-us"
         target="_blank"
       >
         Contact Us
       </Link>
+      
+
       <Link
         onClick={toggleDrawer(false)}
-        className="font-normal text-base text-center text-[#012376]"
+        className="font-normal text-base text-center text-[#2D6F57]"
+        style={{ fontWeight: "700" }}
+        href="/dashboard/admin"
+      >
+        Admin
+      </Link>        
+      <Link
+        onClick={toggleDrawer(false)}
+        className="font-normal text-base text-center text-[#2D6F57]"
         style={{ fontWeight: "700" }}
         href="/login"
       >

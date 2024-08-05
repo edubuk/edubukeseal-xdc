@@ -24,7 +24,7 @@ export const AwardCards: FC<AwardProps> = ({ img }): JSX.Element => {
 
 const AwardsSection = () => {
   return (
-    <div className="flex flex-col gap-20" id="awards">
+    <div className="flex flex-col gap-20 m-0 p-0" id="awards">
       <div className="flex flex-col gap-12">
         <div className="flex flex-col gap-10">
           <div className="flex flex-col gap-4 items-center">
@@ -82,7 +82,7 @@ const AwardsSection = () => {
             Collaborators & Supporters
           </span>
         </div>
-        <div className="relative flex-row gap-10 z-200 flex m-auto gap-2 justify-center items-center ml-28 -mt-28 med:flex-col med:items-center">
+        <div className="relative flex-row gap-10 z-200 flex m-auto gap-2 justify-center items-center ml-28 -mt-28 med:flex-col med:items-center sem:mx-2 mt-6">
           <div className="flex flex-row ">
             <Image
               alt="group"
@@ -120,7 +120,7 @@ const AwardsSection = () => {
               src="/v20/collabsbig.svg"
               width={800}
               height={500}
-              className=" z-1 -mr-20 -ml-20 sem:self-center sem:w-fit"
+              className=" z-1 -mr-20 -ml-20 sem:self-center sem:w-fill"
             />
         </div>
         

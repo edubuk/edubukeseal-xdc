@@ -17,18 +17,17 @@ const About = () => {
         <span
           className={`${outfit.className} font-light text-xl text-black text-center sem:w-[90%] sem:m-auto sem:text-[1rem]`}
         >
-          Edubuk is Your Gateway to the Exciting World of Emerging Technological
-          Skills Built Securely Using AI and Blockchain Our mission is to
-          upskill, reskill and certify learners with cutting-edge knowledge
-          needed to thrive in the ever-evolving career paths of the 21st century
-          driven by these emerging technologies.
+          Our Platform bridges the gap between education and employment by providing emerging tech 
+          courses, verifiable academic & professional credentials and intelligent job matching leveraging 
+          AI and Blockchain Tech.
           <br />
-          <br /> At Edubuk, we believe in recognizing your achievements in a way
-          that stands out during your employment interviews and while you work
-          in MNCs professionally. We provide a reliable and secure system that
-          records your achievements and creates completely verified CVs, known
-          as the Edubuk Profile, all stored on the Blockchain for transparency
-          and reliability.
+          <span className="font-semibold"> Mission: </span> Our Mission is to provide personalized career guidance, 
+          cutting-edge skill development in emerging technologies, and secure credential verification, 
+          ensuring that every learner can achieve their fullest potential and meet the evolving demands of 
+          the global job market today.
+          <br /> <span className="font-semibold"> Vision: </span> Our vision is to revolutionize education and employment by creating 
+          a future where every individuals career path is clear, skills are continuously enhanced, 
+          and credentials are universally trusted.
         </span>
       </div>
       <div className="flex flex-col gap-10" id="founders">
