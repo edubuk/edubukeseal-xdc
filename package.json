@@ -5,10 +5,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "react-env --path ../../../.env -- next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@beam-australia/react-env": "^3.1.1",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.15",
@@ -23,7 +24,9 @@
     "next": "14.1.4",
     "react": "^18",
     "react-dom": "^18",
+    "react-env": "^0.0.0",
     "react-slick": "^0.30.2",
+    "sharp": "^0.33.4",
     "slick-carousel": "^1.8.1",
     "web3": "^4.11.0",
     "web3modal": "^1.9.12",

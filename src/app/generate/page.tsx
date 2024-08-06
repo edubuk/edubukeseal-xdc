@@ -5,6 +5,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { useState } from "react";
+import env  from "@beam-australia/react-env";
+ 
+const api = process.env.API || env("API");
+
 
 const outfit = Outfit({ subsets: ["latin"] });
 
@@ -64,7 +68,7 @@ const Generation = () => {
       console.log(zipFile);
       setSuccessBulk(1);
       const res = await fetch(
-        `${process.env.API}bulk-upload?witness=${ConnectedAccount}`,
+        `${api}bulk-upload?witness=${ConnectedAccount}`,
         {
           method: "POST",
           body: formData,
@@ -179,7 +183,7 @@ const Generation = () => {
     formData.append("issued_by", CertIssuer);
     formData.append("hash", FileHash);
     try {
-      const res = await fetch(`${process.env.API}upload`, {
+      const res = await fetch(`${api}upload`, {
         method: "POST",
         body: formData,
       });

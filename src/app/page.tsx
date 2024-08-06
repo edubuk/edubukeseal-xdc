@@ -6,7 +6,7 @@ import Image from "next/image";
 export default function Home() {
   return (
     <>
-      <div className="flex flex-col gap-[80px] m-0 p-0">
+      <div className="flex flex-col gap-[80px] m-0 p-0 overflow-x-hidden">
         <HeroSection />{" "}
         {/* This section contains the main heading of the page */}
         <AwardsSection />

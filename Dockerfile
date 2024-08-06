@@ -18,8 +18,17 @@ FROM node:20-slim
 WORKDIR /src/app
 
 # Copy built assets and dependencies from frontend-builder stage
-COPY --from=frontend-builder /app .
+COPY --from=frontend-builder /src/app .
+
+ENV NEXT_PUBLIC_APP_URL=https://www.edubukeseal.com
+
+ENV CONTRACT_ADDRESS=0x7B29389a13a2a2443581B511bfD3386eaC175802
+
+ENV API=https://edubukxdc-api-sknjoltd5q-uc.a.run.app/
 
 RUN npm run build
 
 CMD ["npm", "start"]
+
+
+

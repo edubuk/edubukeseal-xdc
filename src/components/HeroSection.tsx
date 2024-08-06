@@ -7,7 +7,7 @@ import React, { FC } from "react";
 const outfit = Outfit({ subsets: ["latin"] });
 const HeroSection = () => {
   return (
-    <div className="bg-page-bg bg-full bg-no-repeat px-20 py-12 flex flex-col gap-20 m-auto sem:mx-8 sem:my-16 ${outfit.className}">
+    <div className="bg-page-bg bg-full bg-no-repeat px-20 py-12 flex flex-col gap-20 m-0 sem:mx-8 sem:my-16 ${outfit.className}">
       <div className="flex flex-col gap-9">
         <div className="flex flex-col gap-6 items-center w-[60%] m-auto sem:w-full">
           <span
