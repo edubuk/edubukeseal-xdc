@@ -754,7 +754,7 @@ const unzipAll = async (zipFileName) => {
 };
 
 const corsOptions = {
-	origin: "http://localhost:3000/", // Your frontend origin
+	origin: "https://edubukeseal-sknjoltd5q-uc.a.run.app/", // Your frontend origin
 	methods: "POST", // Allowed methods
 };
 
@@ -789,7 +789,9 @@ uploadRouter.post(
 			const zipPath = req.files.zip[0].path;
 			const csvPath = req.files.csv[0].path;
 			
-			const zipFile = req.files.zip[0].path;
+			const unzipResult = await unzipAll(zipPath);
+			console.log("Unzip result:", unzipResult);
+
 			const csvData = await parseCSV(csvPath); // Helper function for synchronous CSV parsing
 			const processedData = await Promise.all(csvData.map(processData)); // Helper function for student data processing
 			const witness = req.query.witness;
@@ -922,17 +924,6 @@ const computeHash = async (filePath) => {
 		throw error; // Ensure the error is propagated
 	}
 };
-
-async function uploadToIPFS(data) {
-	const ipfs = IPFS.create();
-
-	try {
-		const { cid } = await ipfs.add(data);
-		return cid.toString();
-	} catch (error) {
-		throw error;
-	}
-}
 
 function cleanupFiles(zipPath, csvPath) {
 	console.log("cleanupFiles:: csvPath: ", csvPath);
