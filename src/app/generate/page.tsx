@@ -537,7 +537,7 @@ const Generation = () => {
                   Click here to Register
                 </button>
               </div>
-            ) //below is false success message
+            ) //below is false success message0
             : (
               <>
                 <div className="flex flex-col gap-4">
