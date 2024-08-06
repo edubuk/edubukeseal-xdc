@@ -43,7 +43,7 @@ const AwardsSection = () => {
             src="/v20/awardbig.svg"
             width={922}
             height={473}
-            className="self-center med:w-fit sem:w-[90%]"
+            className="self-center w-full max-w-[80%] h-auto"
           />
             <div className="flex flex-col items-center justify-center">
               <Image

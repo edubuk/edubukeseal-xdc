@@ -111,7 +111,7 @@ function TemporaryDrawer() {
   );
 
   return (
-    <div className="hidden sem:flex">
+    <div className="hidden sem:flex med:flex">
       <Button onClick={toggleDrawer(true)}>
         <HambergerMenu size="36" color="#333" />
       </Button>
@@ -144,7 +144,7 @@ const Navbar = () => {
               <Image alt="logo" src="/images/newLogo.png" width={75} height={75} />
             </Link>
             
-            <div className="flex bg-white bg-opacity-20 rounded-[10px] px-5 py-4 items-center space-x-6 sem:hidden shadow-navbar-shadow">
+            <div className="flex bg-white bg-opacity-20 rounded-[10px] px-5 py-4 items-center space-x-6 sem:space-x-0 med:hidden sem:hidden shadow-navbar-shadow">
               <Link href="/">
                 <span className="font-normal text-base text-center text-[#000000]">Home</span>
               </Link>

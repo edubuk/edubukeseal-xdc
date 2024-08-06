@@ -7,7 +7,7 @@ const outfit = Outfit({ subsets: ["latin"] });
 
 const Footer = () => {
   return (
-    <div className="flex flex-col bg-white bg-footer-bg bg-fill bg-no-repeat py-14 px-24 gap-20 mt-12 sem:p-8 ">
+    <div className="flex flex-col bg-[#AADBCA] py-14 px-24 gap-20 mt-12 sem:p-8 ">
       <div className="flex flex-col gap-16">
         <div className="flex justify-between med:flex-col">
           <span
