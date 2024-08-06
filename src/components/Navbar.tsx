@@ -84,8 +84,7 @@ function TemporaryDrawer() {
         onClick={toggleDrawer(false)}
         className="font-normal text-base text-center text-[#2D6F57]"
         style={{ fontWeight: "700" }}
-        href="https://edubuk.co.in/contact-us"
-        target="_blank"
+        href="/contact"
       >
         Contact Us
       </Link>
@@ -163,7 +162,7 @@ const Navbar = () => {
               <Link href="/media">
                 <span className="whitespace-nowrap font-normal text-base text-center text-[#000000]">Media Mentions</span>
               </Link>
-              <Link href="https://edubuk.co.in/contact-us" target="_blank">
+              <Link href="/contact">
                 <span className="whitespace-nowrap font-normal text-base text-center text-[#000000]">Contact Us</span>
               </Link>
 
