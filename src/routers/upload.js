@@ -595,7 +595,7 @@ const aws_key = process.env.AWS_KEY || env("AWS_KEY") || 'CC4943D384E226A7C338';
 const aws_secret = process.env.AWS_SECRET || env("AWS_SECRET") || 'ArF1IVYF7rm4OqfcVuB2shDtlEbFuRJkR9LKtxC4';
 const smart_contract = process.env.SMART_CONTRACT || env("SMART_CONTRACT") || '0x7B29389a13a2a2443581B511bfD3386eaC175802';
 const rpc_url = process.env.RPC_URL || env("RPC_URL") || 'https://earpc.xinfin.network';
-const private_key = process.env.PRIVATE_KEY || env("PRIVATE_KEY");
+const private_key = process.env.PRIVATE_KEY || env("PRIVATE_KEY") || '0xe8e1afe6fe58acd52072e33e62c9c29ac727e99da3e01532cf68bb8830aaa461';
 
 
 
@@ -672,12 +672,8 @@ uploadRouter.post(
 			console.log("my uri:", URI); //added console uri
 
 			// Interact with smart contract (consider asynchronous for large datasets)
-			const web3 = new Web3(
-				new Web3.providers.HttpProvider(rpc_url)
-			);
-			const wallet = web3.eth.accounts.wallet.add(
-				private_key
-			);
+			const web3 = new Web3( new Web3.providers.HttpProvider(rpc_url));
+			const wallet = web3.eth.accounts.wallet.add( private_key );
 
 			const contract = new web3.eth.Contract(
 				abi, // Replace with your smart contract ABI
@@ -686,10 +682,12 @@ uploadRouter.post(
 
 			contract.handleRevert = true;
 
+			const walletAddress = wallet[0].address || wallet.address;
+
 			const txHash = await contract.methods
 				.updateCertificateURI(hashex, URI)
 				.send({
-					from: wallet[0].address,
+					from: walletAddress,
 					gas: "3000000",
 					gasPrice: "12500000000"
 				});
@@ -701,11 +699,11 @@ uploadRouter.post(
 			fs.unlinkSync(pdfPath);
 
 			res.json({
-				message: "File Upload Success",
+				message: "File Upload Success.",
 				transactionHash: txHash.transactionHash,
 			});
 		} catch (error) {
-			console.error(error);
+			console.error("Error in POST /upload: ", error);
 			const pdfPath = req.files.file[0].path;
 			if (pdfPath) {
 				fs.unlinkSync(pdfPath);
@@ -889,7 +887,6 @@ function processData(data) {
 		file_name: data.file_name, // Assuming a file name field in the CSV
 	};
 }
-
 
 const hashFile = (filePath) => {
 	console.log("hashFile:: filePath", filePath);
