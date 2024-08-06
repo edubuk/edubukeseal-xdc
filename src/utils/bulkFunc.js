@@ -650,7 +650,7 @@ export async function revoke(obj) {
       .revokeInstitute(obj.address)
       .send({ from: defaultAccount, gas: "3000000", gasPrice: "12500000000" });
     console.log(result);
-    return result.transactionHash;
+    return result;
   } catch (err) {
     console.log("Error sending");
     console.log(err);
@@ -771,7 +771,7 @@ export async function registerCertificate(obj) {
       
       console.log("Object:", result);
       console.log("Transaction Hash: " + result.transactionHash); //error
-      return result;
+      return result.transactionHash;
     } catch (error) {
       console.log("Error in posting certificate"); //error, this
       console.log(error);

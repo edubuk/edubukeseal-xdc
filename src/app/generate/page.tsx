@@ -189,7 +189,7 @@ const Generation = () => {
       });
       const data = await res.json();
       console.log(data);
-      if (data.message === "File Upload Success") {
+      if (data.message === "File Upload Success.") {
         setSuccess(true);
         setTxnHash(receipt);
       }
@@ -366,54 +366,38 @@ const Generation = () => {
       //function calling false success msg
       }
 
-            {TxnHash != "" && (
-              <>
-                <div className="flex flex-col gap-4">
-                  <label
-                    className={`${outfit.className} font-normal text-xl text-[#2D6F57]`}
-                  >
-                    Transaction Hash
-                  </label>
-                  <Link
-                  href={`https://explorer.xinfin.network/tx/${TxnHash}`}
-                  target="_blank"
-                  className={`${outfit.className} font-normal text-xl text-[#2D6F57] rounded-[20px] p-6 bg-[#FFFFFF] sem:p-4 overflow-scroll`}
-                >
-                  {`${TxnHash}`}
-                </Link>
-                </div>
-                <div className="flex flex-col gap-4">
-                  <span
-                    className={`w-full text-xl text-center text-green-500 font-normal ${outfit.className} flex self-center py-2 px-6 justify-center`}
-                  >
-                    <TickCircle size="32" color="#22c55e" variant="Bold" />
-                    File {`"${FileName.name}"`} Successfully Registered!
-                  </span>
-                  <button
-                    className={`rounded-[30px] font-normal text-xl text-center text-[#ffffff] bg-gradient-to-r from-[#2D6F57] to-[#5FC8A2] ${outfit.className} flex self-center py-2 px-6 w-fit`}
-                    onClick={() => window.location.reload()}
-                  >
-                    Click here to register another certificate
-                  </button>
-                </div>
-              </>
-            )}
-            {success === true && (
-              <div className="flex flex-col gap-4">
-                <span
-                  className={`w-full text-xl text-center text-green-500 font-normal ${outfit.className} flex self-center py-2 px-6 justify-center`}
-                >
-                  <TickCircle size="32" color="#22c55e" variant="Bold" />
-                  File Successfully Uploaded!
-                </span>
-                {/* <button
-                  className={`rounded-[30px] font-normal text-xl text-center text-[#ffffff] bg-gradient-to-r from-[#2D6F57] to-[#009EFF] ${outfit.className} flex self-center py-2 px-6 w-fit`}
-                  onClick={() => window.location.reload()}
-                >
-                  Click here to r
-                </button> */}
-              </div>
-            )}
+{(success || TxnHash !== "") && (
+  <>
+    <div className="flex flex-col gap-4">
+      <label
+        className={`${outfit.className} font-normal text-xl text-[#2D6F57]`}
+      >
+        Transaction Hash
+      </label>
+      <Link
+        href={`https://explorer.xinfin.network/tx/${TxnHash}`}
+        target="_blank"
+        className={`${outfit.className} font-normal text-xl text-[#2D6F57] rounded-[20px] p-6 bg-[#FFFFFF] sem:p-4 overflow-scroll`}
+      >
+        {`${TxnHash}`}
+      </Link>
+    </div>
+    <div className="flex flex-col gap-4">
+      <span
+        className={`w-full text-xl text-center text-green-500 font-normal ${outfit.className} flex self-center py-2 px-6 justify-center`}
+      >
+        <TickCircle size="32" color="#22c55e" variant="Bold" />
+        File {`"${FileName.name}"`} Successfully Registered!
+      </span>
+      <button
+        className={`rounded-[30px] font-normal text-xl text-center text-[#ffffff] bg-gradient-to-r from-[#2D6F57] to-[#5FC8A2] ${outfit.className} flex self-center py-2 px-6 w-fit`}
+        onClick={() => window.location.reload()}
+      >
+        Click here to register another certificate
+      </button>
+    </div>
+  </>
+)}
           </div>
         ) : (
           <div className="flex flex-col gap-8">
