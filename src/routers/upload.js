@@ -824,7 +824,7 @@ uploadRouter.post(
 					hash: hashHex,
 					_type: data._type,
 					_witness: witness,
-					URI: (`https://ipfs.filebase.io/ipfs/${urii}`), // IPFS CID from uploadToIPFS
+					URI: (`${urii}`), // IPFS CID from uploadToIPFS
 				};
 			});
 
