@@ -1,15 +1,15 @@
 FROM node:18
 
-RUN mkdir /ec_frontend
+RUN mkdir /ec_backend
 
-WORKDIR /ec_frontend
+WORKDIR /ec_backend
 
-COPY ./package.json /ec_frontend
+COPY ./package.json /ec_backend
 
 RUN npm i -force
 
 RUN npm install @aws-sdk/client-s3
-COPY . /ec_frontend
+COPY . /ec_backend
 
 ENV AWS_KEY='CC4943D384E226A7C338'
 ENV AWS_SECRET='ArF1IVYF7rm4OqfcVuB2shDtlEbFuRJkR9LKtxC4'
