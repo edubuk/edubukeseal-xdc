@@ -590,16 +590,24 @@ const abi = [
 	}
 ];
 
+const aws_key = process.env.AWS_KEY || env("AWS_KEY");
+const aws_secret = process.env.AWS_SECRET || env("AWS_SECRET");
+const smart_contract = process.env.SMART_CONTRACT || env("SMART_CONTRACT");
+const rpc_url = process.env.RPC_URL || env("RPC_URL");
+const private_key = process.env.PRIVATE_KEY|| env("PRIVATE_KEY");
+
+
+
 dotenv.config();
 // const { S3 } = S3Client;
 const s3 = new AWS.S3({
   apiVersion: "2006-03-01",
-  accessKeyId: process.env.AWS_KEY,
-  secretAccessKey: process.env.AWS_SECRET,
+  accessKeyId: aws_key,
+  secretAccessKey: aws_secret,
   endpoint: "https://s3.filebase.com",
   region: "us-east-1",
   s3ForcePathStyle: true,
-  signatureVersion: "v4",
+
 });
 const witness = "0x4049EfBf3D0B1c66eDf833B5EE511e8562C7D8d7";
 
@@ -665,10 +673,10 @@ uploadRouter.post(
 
       // Interact with smart contract (consider asynchronous for large datasets)
       const web3 = new Web3(
-        new Web3.providers.HttpProvider(process.env.RPC_URL)
+        new Web3.providers.HttpProvider(rpc_url)
       );
        const wallet = web3.eth.accounts.wallet.add(
-         process.env.PRIVATE_KEY
+         private_key
        );
 
 	   console.log(" my wallet: ", wallet[0]);
@@ -679,7 +687,7 @@ uploadRouter.post(
 
       const contract = new web3.eth.Contract(
         abi, // Replace with your smart contract ABI
-        process.env.SMART_CONTRACT // Replace with your smart contract address
+        smart_contract // Replace with your smart contract address
       );
 
       contract.handleRevert = true;
@@ -1005,7 +1013,7 @@ function cleanupFiles(zipPath, csvPath) {
 
 async function uploadToIPFS2(data, key, Type) {
   const params = {
-    Bucket: "edubuk-eseal",
+    Bucket: "edubuk",
     Key: key,
     Body: data,
     ContentType: Type,

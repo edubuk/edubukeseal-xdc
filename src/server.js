@@ -3,7 +3,10 @@ import 'dotenv/config';
 import express from 'express';
 import morgan from 'morgan';
 import uploadRouter from './routers/upload.js';
+import env from "@beam-australia/react-env";
 
+
+const portt = process.env.PORT || env("PORT");
 const { S3 } = pkg;
 
 const app = express();
@@ -24,5 +27,5 @@ app.get('/', (req, res) => {
 
 app.use('/', uploadRouter);
 
-const port = process.env.PORT || 3001;
+const port = portt || 3001;
 app.listen(port, () => console.log(`Server listening on port ${port}`));
