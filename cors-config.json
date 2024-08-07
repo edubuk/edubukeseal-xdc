@@ -1,0 +1,21 @@
+[
+    {
+      "origin": [
+        "https://edubukxdc-backend-sknjoltd5q-uc.a.run.app",
+        "https://edubukeseal.com",
+        "*"
+      ],
+      "method": [
+        "GET",
+        "HEAD",
+        "PUT",
+        "PATCH",
+        "POST",
+        "DELETE"
+      ],
+      "responseHeader": ["*"],
+      "maxAgeSeconds": 3600,
+      "credentials": true
+    }
+  ]
+  

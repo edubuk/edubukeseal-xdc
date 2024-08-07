@@ -11,11 +11,15 @@ const { S3 } = pkg;
 const app = express();
 
 // Configure CORS
-app.use(cors({
-    origin: 'https://edubukeseal.com', // Replace with your frontend URL
+const corsOptions = {
+    origin: [
+      '*'
+    ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true
-}));
+    credentials: false
+  };
+  
+app.use(cors(corsOptions));
 
 // Serve static files from the public directory
 app.use(express.static('public'));
@@ -82,7 +86,7 @@ app.get('/', (req, res) => {
                 <img src="/images/logo.png" alt="Edubuk Logo" class="logo"> <!-- Ensure this path is correct -->
                 <h1>Welcome to Edubuk</h1>
                 <p class="description">
-                    We're thrilled to have you on board! Edubuk is your ultimate platform for career guidance, emerging tech training, and more.
+                    <b>We're thrilled to have you on board!</b> Edubuk is your ultimate platform for career guidance, emerging tech training, and more.
                 </p>
                 <p>
                     &nbsp;

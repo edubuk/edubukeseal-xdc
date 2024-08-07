@@ -44,7 +44,17 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-uploadRouter.use(cors({ origin: "https://edubukeseal.com", methods: "POST, GET, OPTIONS", credentials: true }));
+const corsOptions = {
+    origin: [
+      'https://edubukxdc-backend-sknjoltd5q-uc.a.run.app',
+      'https://edubukeseal.com',
+      '*'
+    ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true
+  };
+  
+uploadRouter.use(cors(corsOptions));
 
 uploadRouter.post("/upload", upload.fields([
     { name: "file", maxCount: 1 },

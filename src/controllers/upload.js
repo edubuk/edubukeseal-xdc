@@ -2,6 +2,7 @@ import * as csv from '@fast-csv/parse';
 import fs from 'fs';
 import yauzl from 'yauzl';
 import { s3 } from '../server';
+import cors from "cors";
 
 const unzipAll = async (zipFileName) => {
 	yauzl.open(
