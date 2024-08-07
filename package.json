@@ -1,15 +1,29 @@
 {
 	"name": "edubuk-backend",
 	"version": "1.0.0",
-	"description": "",
+	"description": "Backend service for Edubuk",
 	"type": "module",
-	"main": "server.js",
+	"main": "src/server.js",
 	"scripts": {
 		"dev": "nodemon ./src/server.js",
-		"start": "nodemon ./src/server.js"
+		"start": "nodemon ./src/server.js",
+		"build": "next build",
+		"dev:pm2": "pm2 start npm --name 'edubuk-backend-dev' -- run dev",
+		"start:pm2": "pm2 start npm --name 'edubuk-backend' -- run start",
+		"stop:pm2": "pm2 stop edubuk-backend",
+		"restart:pm2": "pm2 restart edubuk-backend",
+		"delete:pm2": "pm2 delete edubuk-backend",
+		"lint": "next lint"
 	},
-	"author": "",
+	"author": "Dhanraj Dadhich <dhanraj@edubukeseal.org>",
 	"license": "ISC",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/edubuk/edubukeseal-xdc.git"
+	},
+	"engines": {
+		"node": ">=16.0.0"
+	},
 	"dependencies": {
 		"@aws-sdk/client-s3": "^3.577.0",
 		"@beam-australia/react-env": "^3.1.1",
@@ -30,9 +44,11 @@
 		"redis": "^4.6.13",
 		"web": "^0.0.2",
 		"web3": "^4.8.0",
-		"yauzl": "^3.1.3"
+		"yauzl": "^3.1.3",
+		"pm2": "^5.3.0"
 	},
 	"devDependencies": {
-		"nodemon": "^3.1.0"
+		"nodemon": "^3.1.0",
+		"pm2": "^5.3.0"
 	}
 }
