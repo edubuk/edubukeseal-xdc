@@ -137,7 +137,7 @@ const Admin = () => {
                 <input
                   className={`${outfit.className} font-normal text-xl text-[#2D6F57] rounded-[20px] p-6 bg-[#FFFFFF]`}
                   type="text"
-                  placeholder="SUTID"
+                  placeholder="Acronym"
                   onChange={(e) => setInstituteAcronym(e.target.value)}
                   value={InstituteAcronym}
                 />
