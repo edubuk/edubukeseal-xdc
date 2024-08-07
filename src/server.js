@@ -113,7 +113,7 @@ app.get('/', (req, res) => {
 });
 
 // Use the upload router
-app.use('/', uploadRouter);
+app.use('/api/', uploadRouter);
 
 // Error handling middleware (ensure this is after all routes)
 app.use((err, req, res, next) => {
