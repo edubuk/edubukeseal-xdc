@@ -67,11 +67,18 @@ const Generation = () => {
     try {
       console.log(zipFile);
       setSuccessBulk(1);
-      const res = await fetch(
-        `${api}bulk-upload?witness=${ConnectedAccount}`,
+      const res = await fetch(`${api}bulk-upload?witness=${ConnectedAccount}`,
         {
           method: "POST",
           body: formData,
+          headers: {
+            'Content-Type': 'multipart/form-data', // or the appropriate content type for your use case
+            'Access-Control-Allow-Origin': '*', // This is usually handled by the server, not set by the client
+            'Access-Control-Allow-Methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Allow-Credentials': 'false' // Indicates whether credentials are included in the request
+          },
+          credentials: 'include', // This includes credentials (cookies, etc.) in the request
         }
       );
       const data = await res.json();
@@ -183,9 +190,22 @@ const Generation = () => {
     formData.append("issued_by", CertIssuer);
     formData.append("hash", FileHash);
     try {
+      // const res = await fetch(`${api}upload`, {
+      //   method: "POST",
+      //   body: formData,
+
+      // });
       const res = await fetch(`${api}upload`, {
         method: "POST",
         body: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data', // or the appropriate content type for your use case
+          'Access-Control-Allow-Origin': '*', // This is usually handled by the server, not set by the client
+          'Access-Control-Allow-Methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+          'Access-Control-Allow-Headers': 'Content-Type',
+          'Access-Control-Allow-Credentials': 'false' // Indicates whether credentials are included in the request
+        },
+        credentials: 'include', // This includes credentials (cookies, etc.) in the request
       });
       const data = await res.json();
       console.log(data);
