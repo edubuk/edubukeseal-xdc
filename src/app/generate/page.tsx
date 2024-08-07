@@ -72,7 +72,7 @@ const Generation = () => {
           method: "POST",
           body: formData,
           headers: {
-            'Content-Type': 'multipart/form-data', // or the appropriate content type for your use case
+            // 'Content-Type': 'multipart/form-data', // or the appropriate content type for your use case
             'Access-Control-Allow-Origin': '*', // This is usually handled by the server, not set by the client
             'Access-Control-Allow-Methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
             'Access-Control-Allow-Headers': 'Content-Type',
