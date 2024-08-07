@@ -82,47 +82,25 @@ const AwardsSection = () => {
             Collaborators & Supporters
           </span>
         </div>
-        <div className="relative flex-row gap-10 z-200 flex m-auto gap-2 justify-center items-center ml-28 -mt-28 med:flex-col med:items-center sem:mx-2 mt-6">
-          <div className="flex flex-row ">
-            <Image
-              alt="group"
-              src="/images/grouppic.png"
-              width={450}
-              height={380}
-              className="z-10 sem:self-center sem:w-fit"
-            />
-            
-            {/*<span
-              className={`${outfit.className} font-normal text-xl text-[#012376] text-center sem:w-[90%] sem:self-center`}
-            >
-              Edubuk and IEE, MoU Signed for Collaboration
-            </span>*/}
-          </div>
-          {/*<div className="flex flex-col gap-9">
-            <div className="flex gap-9 sem:gap-4 sem:self-center">
-              <AwardCards img={"/images/l1.png"} />
-              <AwardCards img={"/images/l2.png"} />
-              <AwardCards img={"/images/l3.png"} />
-            </div>
-            <div className="flex gap-9 sem:gap-4">
-              <AwardCards img={"/images/l4.png"} />
-              <AwardCards img={"/images/l5.png"} />
-              <AwardCards img={"/images/l6.png"} />
-            </div>
-            <div className="flex gap-9 sem:gap-4">
-              <AwardCards img={"/images/l7.png"} />
-              <AwardCards img={"/images/l8.png"} />
-              <AwardCards img={"/images/l99.png"} />
-            </div>
-          </div>*/}
-          <Image
-              alt="collaboraters"
-              src="/v20/collabsbig.svg"
-              width={800}
-              height={500}
-              className=" z-1 -mr-20 -ml-20 lg: ml-0 -mr-40 sem:self-center sem:w-fill"
-            />
-        </div>
+        <div className="relative flex gap-10 z-200 flex-row justify-center items-center m-auto ml-28 -mt-28 med:flex-col med:items-center sem:mx-2 mt-6">
+  <div className="flex flex-row">
+    <Image
+      alt="group"
+      src="/images/grouppic.png"
+      width={1200}
+      height={900}
+      className="z-10 sem:self-center sem:w-full"
+    />
+  </div>
+  <Image
+    alt="collaboraters"
+    src="/v20/collabsbig.svg"
+    width={1200}
+    height={900}
+    className="z-1 -mr-20 -ml-20 lg:ml-0 lg:-mr-40 sem:self-center sem:w-full"
+  />
+</div>
+
         
         <div className="flex flex-col gap-12 -mt-14">
           <span
