@@ -5,27 +5,27 @@ import morgan from 'morgan';
 import uploadRouter from './routers/upload.js';
 import cors from 'cors';
 
-const port = process.env.PORT || 3001; // Use PORT from environment variables or default to 3001
 const { S3 } = pkg;
+const port = process.env.PORT || 3001; // Use PORT from environment variables or default to 3001
 
 const app = express();
 
 // Configure CORS
 const corsOptions = {
-    origin: [
-      '*'
-    ],
+    origin: '*', // Adjust the origin as per your requirements
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: false
-  };
-  
+    credentials: false,
+};
+
 app.use(cors(corsOptions));
 
 // Serve static files from the public directory
 app.use(express.static('public'));
 
-// Middleware
+// Middleware for parsing JSON
 app.use(express.json());
+
+// Logger middleware
 app.use(morgan('dev'));
 
 // Serve the HTML content for the root path
@@ -122,4 +122,6 @@ app.use((err, req, res, next) => {
 });
 
 // Start the server
-app.listen(port, () => console.log(`Server listening on port ${port}`));
+app.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
+});
