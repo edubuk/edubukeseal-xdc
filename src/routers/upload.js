@@ -1,14 +1,11 @@
-
-
 import crypto from "crypto";
 import { Router } from "express";
 import fs from "fs";
 import multer from "multer";
 import path from "path";
-import Web3 from "web3";
+import { Web3 } from "web3";
 import yauzl from "yauzl";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
-import * as IPFS from "ipfs-http-client";
 import dotenv from "dotenv";
 import cors from "cors";
 import AWS from "aws-sdk";
@@ -22,15 +19,6 @@ const aws_secret = process.env.AWS_SECRET || env("AWS_SECRET") || 'ArF1IVYF7rm4O
 const smart_contract = process.env.SMART_CONTRACT || env("SMART_CONTRACT") || '0x7B29389a13a2a2443581B511bfD3386eaC175802';
 const rpc_url = process.env.RPC_URL || env("RPC_URL") || 'https://earpc.xinfin.network';
 const private_key = process.env.PRIVATE_KEY || env("PRIVATE_KEY") || '0xe8e1afe6fe58acd52072e33e62c9c29ac727e99da3e01532cf68bb8830aaa461';
-
-const s3 = new AWS.S3({
-	apiVersion: "2006-03-01",
-	accessKeyId: aws_key,
-	secretAccessKey: aws_secret,
-	endpoint: "https://s3.filebase.com",
-	region: "us-east-1",
-	s3ForcePathStyle: true,
-});
 
 const abi = [
 	{
@@ -607,6 +595,16 @@ const abi = [
 	}
 ];
 
+const s3 = new AWS.S3({
+	apiVersion: "2006-03-01",
+	accessKeyId: aws_key,
+	secretAccessKey: aws_secret,
+	endpoint: "https://s3.filebase.com",
+	region: "us-east-1",
+	s3ForcePathStyle: true,
+	signatureVersion: "v4",
+});
+
 const uploadRouter = Router();
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
@@ -617,138 +615,52 @@ const storage = multer.diskStorage({
 		cb(null, `${file.fieldname}-${Date.now()}${ext}`);
 	},
 });
-const upload = multer({ storage });
+const upload = multer({ storage: storage });
 
 const corsOptions = {
-	origin: [ '*' ],
+	origin: '*',
 	methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 	credentials: true
 };
 
 uploadRouter.use(cors(corsOptions));
 
-uploadRouter.post(
-	"/upload",
-	cors(corsOptions),
-	upload.fields([
-		{ name: "file", maxCount: 1 },
-		{ name: "hash", maxCount: 1 },
-		{ name: "issued_by", maxCount: 1 },
-		{ name: "issued_to", maxCount: 1 },
-	]),
-	async (req, res) => {
-		try {
-			if (!req.files || !req.files.file || !req.files.file[0]) {
-				throw new Error("Bad Request: file is missing");
-			}
-
-			const contentType = req.files.file[0].mimetype;
-
-			if (
-				contentType !== "application/pdf" &&
-				contentType !== "image/jpeg" &&
-				contentType !== "image/png"
-			) {
-				throw new Error(
-					"Bad Request: Invalid File Type. Only PDF, JPG, and PNG are allowed."
-				);
-			}
-			let fileType;
-			if (contentType === "application/pdf") {
-				fileType = ".pdf";
-			} else if (contentType === "image/png") {
-				fileType = ".png";
-			} else if (contentType === "image/jpeg") {
-				fileType = ".jpeg";
-			}
-
-			const pdfPath = req.files.file[0].path;
-			const hashex = req.body.hash;
-			const issued_by = req.body.issued_by;
-			const issued_to = req.body.issued_to;
-
-			const key = `${issued_by}/${issued_to}-${Date.now()}${fileType}`;
-
-			const pdfContent = fs.readFileSync(pdfPath);
-			const URI = await uploadToIPFS2(pdfContent, key, contentType);
-			console.log("my uri:", URI); // added console uri
-
-			// Interact with smart contract (consider asynchronous for large datasets)
-			const web3 = new Web3(new Web3.providers.HttpProvider(rpc_url));
-			const wallet = web3.eth.accounts.wallet.add(private_key);
-
-			const contract = new web3.eth.Contract(
-				abi, // Replace with your smart contract ABI
-				smart_contract // Replace with your smart contract address
-			);
-
-			contract.handleRevert = true;
-
-			const walletAddress = wallet[0].address || wallet.address;
-
-			const txHash = await contract.methods
-				.updateCertificateURI(hashex, URI)
-				.send({
-					from: walletAddress,
-					gas: "3000000",
-					gasPrice: "12500000000"
-				});
-
-			const receipt = await web3.eth.getTransactionReceipt(
-				txHash.transactionHash
-			);
-
-			fs.unlinkSync(pdfPath);
-
-			res.json({
-				message: "File Upload Success.",
-				transactionHash: txHash.transactionHash,
-			});
-		} catch (error) {
-			console.error("Error in POST /upload: ", error);
-			if (req.files && req.files.file && req.files.file[0] && req.files.file[0].path) {
-				fs.unlinkSync(req.files.file[0].path);
-			}
-			res.status(500).send({ message: error.message });
-		}
-	}
-);
-
 const unzipAll = async (zipFileName) => {
 	return new Promise((resolve, reject) => {
-		yauzl.open(
-			`${zipFileName}`,
-			{ lazyEntries: true },
-			function (err, zipfile) {
-				if (err) {
-					console.error("Error Opening zip file", err);
-					reject(err);
-				}
+		yauzl.open(zipFileName, { lazyEntries: true }, (err, zipfile) => {
+			if (err) return reject(err);
 
-				zipfile.readEntry();
-				zipfile.on("entry", function (entry) {
-					if (
-						/\/$/.test(entry.fileName) ||
-						String(entry.fileName).includes("/")
-					) {
-						zipfile.readEntry();
-					} else {
-						zipfile.openReadStream(entry, async function (err, readStream) {
-							if (err) reject(err);
-							readStream.on("end", function () {
-								zipfile.readEntry();
-							});
-							const name = entry.fileName;
-							const newFile = fs.createWriteStream(`uploads/unzip/${name}`);
-							readStream.pipe(newFile);
+			zipfile.readEntry();
+			zipfile.on("entry", (entry) => {
+				if (/\/$/.test(entry.fileName) || entry.fileName.includes("/")) {
+					zipfile.readEntry();
+				} else {
+					zipfile.openReadStream(entry, (err, readStream) => {
+						if (err) return reject(err);
+
+						const name = entry.fileName;
+						const newFile = fs.createWriteStream(`uploads/unzip/${name}`);
+						readStream.pipe(newFile);
+
+						readStream.on("end", () => {
+							zipfile.readEntry();
 						});
-					}
-				});
-				zipfile.on("end", () => {
-					resolve(); // Resolve the promise when unzip is complete
-				});
-			}
-		);
+					});
+				}
+			});
+			zipfile.on("end", () => resolve());
+		});
+	});
+};
+
+const parseCSV = async (csvPath) => {
+	return new Promise((resolve, reject) => {
+		const results = [];
+		fs.createReadStream(csvPath)
+			.pipe(csv())
+			.on('data', (data) => results.push(data))
+			.on('end', () => resolve(results))
+			.on('error', (error) => reject(error));
 	});
 };
 
@@ -758,93 +670,10 @@ function calculateGas(data) {
 	return gas;
 }
 
-uploadRouter.post(
-	"/bulk-upload",
-	cors(),
-	upload.fields([
-		{ name: "zip", maxCount: 1 },
-		{ name: "csv", maxCount: 1 },
-	]),
-	async (req, res) => {
-		try {
-			// Validate file types
-			if (
-				req.files.zip[0].mimetype !== "application/zip" &&
-				req.files.zip[0].mimetype !== "application/x-zip-compressed"
-			) {
-				throw new Error("Bad Request: Invalid ZIP File Type");
-			}
-			if (req.files.csv[0].mimetype !== "text/csv") {
-				throw new Error("Bad Request: Invalid CSV File Type");
-			}
-
-			// Process ZIP file
-			const zipPath = req.files.zip[0].path;
-			const csvPath = req.files.csv[0].path;
-			
-			const unzipResult = await unzipAll(zipPath);
-			console.log("Unzip result:", unzipResult);
-
-			const csvData = await parseCSV(csvPath); // Helper function for synchronous CSV parsing
-			const processedData = await Promise.all(csvData.map(processData)); // Helper function for student data processing
-			const witness = req.query.witness;
-			
-			const uploadPromises = processedData.map(async (data) => {
-				const fileType = getFileType(data.file_name);
-				console.log("file type", fileType);
-				let contentType;
-				if (fileType === ".pdf") {
-					contentType = "application/pdf";
-				} else if (fileType === ".png") {
-					contentType = "image/png";
-				} else if (fileType === ".jpeg" || fileType === ".jpg") {
-					contentType = "image/jpeg";
-				} else {
-					throw new Error("Unsupported file type");
-				}
-
-				const pdfPath = `uploads/unzip/${data.file_name}`; // Assuming unzipped files in 'uploads/unzip'
-
-				const pdfContent = fs.readFileSync(pdfPath); // Synchronous file reading (alternative approaches needed for large files)
-
-				const key = `${witness}/${data.studentname}-${Date.now()}${fileType}`;
-
-				const urii = await uploadToIPFS2(pdfContent, key, contentType);
-
-				const hashHex = await computeHash(pdfPath);
-				console.log("Mahadev: Dhanraj hashHex: ", hashHex);
-
-				return {
-					studentname: data.studentname,
-					hash: hashHex,
-					_type: data._type,
-					_witness: witness,
-					URI: (`${urii}`), // IPFS CID from uploadToIPFS
-				};
-			});
-
-			const processedDataWithIPFS = await Promise.all(uploadPromises);
-
-			// Cleanup temporary files after successful processing
-			cleanupFiles(zipPath, csvPath);
-
-			res.json({
-				message: "File Upload Success",
-				response: processedDataWithIPFS,
-				// Include transaction hashes in the response
-			});
-		} catch (error) {
-			const zipPath = req.files.zip[0].path;
-			const csvPath = req.files.csv[0].path;
-
-			if (zipPath && csvPath) {
-				cleanupFiles(zipPath, csvPath);
-			}
-			console.error(error);
-			res.status(500).send({ message: error.message });
-		}
-	}
-);
+const getFileType = (fileName) => {
+	const ext = path.extname(fileName).toLowerCase();
+	return ext;
+};
 
 function processData(data) {
 	return {
@@ -889,13 +718,31 @@ const computeHash = async (filePath) => {
 };
 
 function cleanupFiles(zipPath, csvPath) {
+	// Function to handle file deletion
+	const deleteFile = (filePath) => {
+		if (filePath) {
+			fs.unlink(filePath, (err) => {
+				if (err) {
+					console.error(`Error deleting file at ${filePath}:`, err);
+				} else {
+					console.log(`Successfully deleted file at ${filePath}`);
+				}
+			});
+		}
+	};
+
+	// Log paths for debugging
 	console.log("cleanupFiles:: csvPath: ", csvPath);
 	console.log("cleanupFiles:: zipPath: ", zipPath);
+
+	// Delete the files
+	deleteFile(csvPath);
+	deleteFile(zipPath);
 }
 
 async function uploadToIPFS2(data, key, Type) {
 	const params = {
-		Bucket: "edubuk",
+		Bucket: "edubuk-eseal",
 		Key: key,
 		Body: data,
 		ContentType: Type,
@@ -956,5 +803,151 @@ async function getUri(data, key, Type) {
 		throw err;
 	}
 }
+
+uploadRouter.post(
+	"/upload",
+	upload.fields([
+		{ name: "file", maxCount: 1 },
+		{ name: "hash", maxCount: 1 },
+		{ name: "issued_by", maxCount: 1 },
+		{ name: "issued_to", maxCount: 1 },
+	]),
+	async (req, res) => {
+		try {
+			if (!req.files || !req.files.file || !req.files.file[0]) {
+				throw new Error("Bad Request: file is missing");
+			}
+
+			const contentType = req.files.file[0].mimetype;
+
+			const allowedTypes = ["application/pdf", "image/jpeg", "image/png", "image/jpg"];
+			if (!allowedTypes.includes(contentType)) {
+				throw new Error("Bad Request: Invalid File Type. Only PDF, JPG, JPEG, and PNG are allowed.");
+			}
+
+			let fileType;
+			if (contentType === "application/pdf") fileType = ".pdf";
+			else if (contentType === "image/png") fileType = ".png";
+			else if (contentType === "image/jpeg") fileType = ".jpeg";
+			else if (contentType === "image/jpg") fileType = ".jpg";
+
+			const pdfPath = req.files.file[0].path;
+			const hashex = req.body.hash;
+			const issued_by = req.body.issued_by;
+			const issued_to = req.body.issued_to;
+
+			const key = `${issued_by}/${issued_to}-${Date.now()}${fileType}`;
+
+			const pdfContent = fs.readFileSync(pdfPath);
+			const URI = await uploadToIPFS2(pdfContent, key, contentType);
+			console.log("my uri:", URI);
+
+			const web3 = new Web3(new Web3.providers.HttpProvider(rpc_url));
+			const wallet = web3.eth.accounts.wallet.add(private_key);
+
+			const contract = new web3.eth.Contract(abi, smart_contract);
+			contract.handleRevert = true;
+
+			const txHash = await contract.methods
+				.updateCertificateURI(hashex, URI)
+				.send({
+					from: wallet[0].address,
+					gas: "3000000",
+					gasPrice: "12500000000"
+				});
+
+			console.log("TXN HASH:", txHash.transactionHash);
+
+			fs.unlinkSync(pdfPath);
+
+			res.json({
+				message: "File Upload Success",
+				transactionHash: txHash.transactionHash,
+			});
+		} catch (error) {
+			console.error(error);
+			if (req.files && req.files.file && req.files.file[0]) {
+				const pdfPath = req.files.file[0].path;
+				if (pdfPath) fs.unlinkSync(pdfPath);
+			}
+			res.status(500).send({ message: error.message });
+		}
+	}
+);
+
+uploadRouter.post(
+	"/bulk-upload",
+	upload.fields([
+		{ name: "zip", maxCount: 1 },
+		{ name: "csv", maxCount: 1 },
+	]),
+	async (req, res) => {
+		try {
+			if (!req.files.zip || !req.files.zip[0] || !req.files.csv || !req.files.csv[0]) {
+				throw new Error("Bad Request: Missing files");
+			}
+
+			const zipMimeType = req.files.zip[0].mimetype;
+			const csvMimeType = req.files.csv[0].mimetype;
+
+			if (zipMimeType !== "application/zip" && zipMimeType !== "application/x-zip-compressed") {
+				throw new Error("Bad Request: Invalid ZIP File Type");
+			}
+			if (csvMimeType !== "text/csv") {
+				throw new Error("Bad Request: Invalid CSV File Type");
+			}
+
+			const zipPath = req.files.zip[0].path;
+			const csvPath = req.files.csv[0].path;
+
+			console.log("zip", zipPath);
+			console.log("csv", csvPath);
+
+			await unzipAll(zipPath);
+			const csvData = await parseCSV(csvPath);
+
+			const processedData = await Promise.all(csvData.map(processData));
+			console.log("data", processedData);
+
+			const s3Client = s3;
+			const witness = req.query.witness;
+
+			const uploadPromises = processedData.map(async (data) => {
+				const fileType = getFileType(data.file_name);
+				let contentType;
+				if (fileType === ".pdf") contentType = "application/pdf";
+				else if (fileType === ".png") contentType = "image/png";
+				else if (fileType === ".jpeg" || fileType === ".jpg") contentType = "image/jpeg";
+				else throw new Error("Unsupported file type");
+
+				const pdfPath = `uploads/unzip/${data.file_name}`;
+				const pdfContent = fs.readFileSync(pdfPath);
+
+				const key = `${witness}/${data.studentname}-${Date.now()}${fileType}`;
+				const uri = await uploadToIPFS2(pdfContent, key, contentType);
+
+				const hashHex = await contract.methods.updateCertificateURI(data.hash, uri).send({
+					from: wallet[0].address,
+					gas: "3000000",
+					gasPrice: "12500000000",
+				});
+
+				return { data, uri, hashHex: hashHex.transactionHash };
+			});
+
+			const results = await Promise.all(uploadPromises);
+
+			fs.unlinkSync(zipPath);
+			fs.unlinkSync(csvPath);
+
+			res.json({ message: "Bulk Upload Success", results });
+		} catch (error) {
+			console.error(error);
+			if (req.files.zip && req.files.zip[0]) fs.unlinkSync(req.files.zip[0].path);
+			if (req.files.csv && req.files.csv[0]) fs.unlinkSync(req.files.csv[0].path);
+			res.status(500).send({ message: error.message });
+		}
+	}
+);
 
 export default uploadRouter;
