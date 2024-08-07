@@ -618,7 +618,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 const corsOptions = {
-	origin: '*',
+	origin: 'https://edubukeseal.com',
 	methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 	credentials: true
 };
@@ -742,7 +742,7 @@ function cleanupFiles(zipPath, csvPath) {
 
 async function uploadToIPFS2(data, key, Type) {
 	const params = {
-		Bucket: "edubuk-eseal",
+		Bucket: "edubuk",
 		Key: key,
 		Body: data,
 		ContentType: Type,
