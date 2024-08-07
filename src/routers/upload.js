@@ -845,7 +845,7 @@ uploadRouter.post(
 					hash: hashHex,
 					_type: data._type,
 					_witness: witness,
-					URI: (`https://ipfs.filebase.io/ipfs/${urii}`), // IPFS CID from uploadToIPFS
+					URI: (`${urii}`), // IPFS CID from uploadToIPFS
 				};
 			});
 
@@ -962,7 +962,7 @@ function cleanupFiles(zipPath, csvPath) {
 
 async function uploadToIPFS2(data, key, Type) {
 	const params = {
-		Bucket: "edubuk-eseal",
+		Bucket: "edubuk",
 		Key: key,
 		Body: data,
 		ContentType: Type,
