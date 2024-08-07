@@ -214,19 +214,21 @@ const Verify = () => {
                 >
                   Upload a file to verify
                 </label>
-                <div className="flex items-center sem:flex-col">
+                <div className="flex flex-col items-center sem:flex-col">
                   <input
                     className={`${outfit.className} font-normal text-xl text-[#2D6F57] rounded-[20px] p-6 bg-[#FFFFFF] sem:p-4 sem:w-full`}
                     type="file"
                     placeholder="Choose file"
                     onChange={selectFile}
                   />
-                  <span
-                    className={`${outfit.className} font-normal text-xl text-[#2D6F57] text-center`}
+                  
+                </div>
+
+                <span
+                    className={`${outfit.className} font-normal text-xl text-[#2D6F57] text-left`}
                   >
                     Suggested file types: PDF, JPEG, PNG
                   </span>
-                </div>
               </div>
               <button
                 className={`rounded-[30px] font-normal text-xl text-center text-[#ffffff] bg-gradient-to-r from-[#2D6F57] to-[#5FC8A2] ${outfit.className} flex self-center py-2 px-6 w-fit`}
