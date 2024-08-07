@@ -62,7 +62,7 @@ function TemporaryDrawer() {
         style={{ fontWeight: "700" }}
         href="/generate"
       >
-        Upload Certificates
+        eSeal
       </Link>
       <Link
         onClick={toggleDrawer(false)}
