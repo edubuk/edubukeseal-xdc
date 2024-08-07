@@ -108,20 +108,20 @@ const ProgramSection: React.FC = () => {
           </span>
         </div>
         <div className="flex bg-[#5FC8A247] rounded-[12px] w-[90%] gap-5 py-8 px-2 justify-center items-center mx-auto sem:flex-col sem:w-fit sem:self-center">
-          <div className="rounded-3xl bg-[#FFFFFF] py-4 px-2 border border-solid border-[#AECFFF47] flex items-center w-24 h-24">
-            <Image src="/images/l22.png" alt="adlogo" width={89} height={89} />
+          <div className="rounded-3xl bg-[#FFFFFF] border border-solid border-[#AECFFF47] flex items-center">
+            <Image src="/images/l22.png" alt="adlogo" width={250} height={250} className="min-w-[100%] min-h-[150px] max-w-[100%] max-h-[150px]" />
           </div>
-          <div className="rounded-3xl bg-[#FFFFFF] py-4 px-2 border border-solid border-[#AECFFF47] flex items-center w-24 h-24">
-            <Image src="/images/l23.png" alt="adlogo" width={89} height={89} />
+          <div className="rounded-3xl bg-[#FFFFFF] py-4 px-2 border border-solid border-[#AECFFF47] flex items-center">
+            <Image src="/images/l23.png" alt="adlogo" width={250} height={250} className="min-w-[100%] min-h-[150px] max-w-[100%] max-h-[150px]" />
           </div>
-          <div className="rounded-3xl bg-[#FFFFFF] py-8 px-4 border-solid border-[#AECFFF47] flex items-center w-24 h-24">
-            <Image src="/images/l24.png" alt="adlogo" width={89} height={89} />
+          <div className="rounded-3xl bg-[#FFFFFF] py-8 px-4 border-solid border-[#AECFFF47] flex items-center ">
+            <Image src="/images/l24.png" alt="adlogo" width={250} height={250} className="min-w-[100%] min-h-[150px] max-w-[100%] max-h-[150px]" />
           </div>
-          <div className="rounded-3xl bg-[#FFFFFF] py-8 px-3 border border-solid border-[#AECFFF47] flex items-center w-24 h-24">
-            <Image src="/images/l25.png" alt="adlogo" width={89} height={89} />
+          <div className="rounded-3xl bg-[#FFFFFF] py-8 px-3 border border-solid border-[#AECFFF47] flex items-center">
+            <Image src="/images/l25.png" alt="adlogo" width={250} height={250} className="min-w-[100%] min-h-[150px] max-w-[100%] max-h-[150px]" />
           </div>
-          <div className="rounded-3xl bg-[#FFFFFF] py-6 px-3 border border-solid border-[#AECFFF47] flex items-center w-24 h-24">
-            <Image src="/images/l26.png" alt="adlogo" width={89} height={89} />
+          <div className="rounded-3xl bg-[#FFFFFF] py-6 px-3 border border-solid border-[#AECFFF47] flex items-center">
+            <Image src="/images/l26.png" alt="adlogo" width={250} height={250} className="min-w-[100%] min-h-[150px] max-w-[100%] max-h-[150px]" />
           </div>
         </div>
         <div className="flex gap-5 justify-center"></div>

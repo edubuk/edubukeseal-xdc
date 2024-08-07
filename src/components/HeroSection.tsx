@@ -38,23 +38,6 @@ const HeroSection = () => {
             </button>
           </Link>
         </div>
-
-        {/*}
-        <div className="flex flex-col gap-3 items-center">
-          <span
-            className={`font-normal text-base text-center ${outfit.className} text-[#00378A]`}
-          >
-            Powered by{" "}
-          </span>
-          <Image
-            alt="jumbologo"
-            src="https://protojumbo.jumbochain.org/images/logosvg.svg"
-            width={74}
-            height={74}
-          />
-        </div>
-        */}
-
       </div>
       
       <div className="flex flex-col gap-14" id="learner">
