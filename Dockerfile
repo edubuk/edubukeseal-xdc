@@ -24,7 +24,7 @@ ENV NEXT_PUBLIC_APP_URL=https://www.edubukeseal.com
 
 ENV CONTRACT_ADDRESS=0x7B29389a13a2a2443581B511bfD3386eaC175802
 
-ENV API=http://34.30.16.204:3001/
+ENV API=https://edubukxdc-backend-sknjoltd5q-uc.a.run.app/
 
 RUN npm run build
 
