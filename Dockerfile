@@ -22,8 +22,11 @@ ENV SMART_CONTRACT='0x7B29389a13a2a2443581B511bfD3386eaC175802'
 ENV PRIVATE_KEY='0xe8e1afe6fe58acd52072e33e62c9c29ac727e99da3e01532cf68bb8830aaa461'   
 ENV RPC_URL='https://earpc.xinfin.network'
 
-# Expose port 3001 for the application
-EXPOSE 3001
+# Expose the port the app runs on
+EXPOSE 8080
+
+# Define environment variable
+ENV PORT=8080
 
 # Start the application
 CMD ["npm", "start"]

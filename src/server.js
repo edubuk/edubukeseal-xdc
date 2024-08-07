@@ -6,7 +6,7 @@ import uploadRouter from './routers/upload.js';
 import cors from 'cors';
 
 const { S3 } = pkg;
-const port = process.env.PORT || 3001; // Use PORT from environment variables or default to 3001
+const port = process.env.PORT || 8080; // Use PORT from environment variables or default to 8080
 
 const app = express();
 
@@ -118,7 +118,7 @@ app.use('/api/', uploadRouter);
 // Error handling middleware (ensure this is after all routes)
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).send('Internal Server Error');
+    res.status(500).send({message: 'Internal Server Error'});
 });
 
 // Start the server
