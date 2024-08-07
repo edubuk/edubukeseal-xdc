@@ -10,6 +10,7 @@ const config: Config = {
     screens: {
       med: { max: "900px" },
       sem: { max: "600px" },
+      lg: { max: "1024" },
     },
     extend: {
       backgroundImage: {

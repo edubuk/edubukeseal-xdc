@@ -40,7 +40,7 @@ const AwardsSection = () => {
           <div className="flex flex-col gap-9 items-center justify-center med:flex-col">
           <Image
             alt="logos"
-            src="/v20/awardbig.svg"
+            src="/v20/collab-big.png"
             width={922}
             height={473}
             className="self-center w-full max-w-[80%] h-auto"
@@ -120,7 +120,7 @@ const AwardsSection = () => {
               src="/v20/collabsbig.svg"
               width={800}
               height={500}
-              className=" z-1 -mr-20 -ml-20 sem:self-center sem:w-fill"
+              className=" z-1 -mr-20 -ml-20 lg: ml-0 -mr-40 sem:self-center sem:w-fill"
             />
         </div>
         

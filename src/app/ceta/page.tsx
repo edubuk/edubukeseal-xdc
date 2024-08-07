@@ -101,8 +101,7 @@ const CetaProgram = () => {
                 Internet of Things (IoT) & Internet of Behavior (IoB)
               </span>
             </div>
-          </div>
-          <div className="flex gap-4 m-auto sem:flex-col sem:items-center">
+
             <div className="rounded-[20px] w-[300px] h-[185px] justify-center border border-solid border-[#E0FAEA] bg-[#E0FAEA] py-7 px-9 flex items-center sem:p-4">
               <span
                 className={`${outfit.className} font-normal text-xl text-[#2D6F57] text-center`}
@@ -111,6 +110,10 @@ const CetaProgram = () => {
                 & Metaverse
               </span>
             </div>
+            
+          </div>
+          <div className="flex gap-4 m-auto sem:flex-col sem:items-center">
+            
             <div className="rounded-[20px]  w-[300px] h-[185px] justify-center border border-solid border-[#E0FAEA] bg-[#E0FAEA] py-7 px-9 flex items-center sem:p-4">
               <span
                 className={`${outfit.className} font-normal text-xl text-[#2D6F57] text-center`}
