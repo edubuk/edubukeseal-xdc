@@ -19,7 +19,4 @@ ENV RPC_URL='https://earpc.xinfin.network'
 
 EXPOSE 3001
 
-RUN npm run dev
-
-
 CMD ["npm", "start"]
